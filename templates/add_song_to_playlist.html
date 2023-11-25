@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Song to Playlist {% endblock %}
+
+{% block content %}
+    <h2>Add Song to Playlist: {{ playlist.name }}</h2>
+
+    <div class="add-song-form">
+        <form method="post" action="{{ url_for('add_song_to_playlist', playlist_id=playlist.id) }}">
+            {{ form.csrf_token }}
+
+            <div class="form-group">
+                {{ form.song.label(class="form-label") }}
+                {{ form.song(class="form-control") }}
+                {% for error in form.song.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Song to Playlist</button>
+        </form>
+    </div>
+
+    <h3>Current Songs in Playlist</h3>
+    <ul class="song-list">
+        {% for song in playlist.songs %}
+            <li class="song-list-item">{{ song.title }} - {{ song.artist }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}

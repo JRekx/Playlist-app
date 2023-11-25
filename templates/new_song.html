@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Song {% endblock %}
+
+{% block content %}
+    <h2>Add a New Song</h2>
+
+    <div class="add-song-form">
+        <form method="post" action="{{ url_for('add_song') }}">
+            {{ form.csrf_token }}
+
+            <div class="form-group">
+                {{ form.title.label(class="form-label") }}
+                {{ form.title(class="form-control") }}
+                {% for error in form.title.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <div class="form-group">
+                {{ form.artist.label(class="form-label") }}
+                {{ form.artist(class="form-control") }}
+                {% for error in form.artist.errors %}
+                    <span class="text-danger">{{ error }}</span>
+                {% endfor %}
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add Song</button>
+        </form>
+    </div>
+
+    <h3>All Songs</h3>
+    <ul class="song-list">
+        {% for song in songs %}
+            <li class="song-list-item">{{ song.title }} - {{ song.artist }}</li>
+        {% endfor %}
+    </ul>
+{% endblock %}
